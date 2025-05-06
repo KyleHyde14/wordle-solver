@@ -1,5 +1,5 @@
 from .words import WORDS
-laying = True
+playing = True
 
 while playing:
-    
+    pass
