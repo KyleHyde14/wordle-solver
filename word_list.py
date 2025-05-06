@@ -2272,7 +2272,6 @@ WORDS = [
   'serra', 
   'serre', 
   'serro', 
-  'serte', 
   'servo', 
   'sesee', 
   'sesen', 
