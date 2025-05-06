@@ -11,6 +11,8 @@ print('The format will be GGGGG if all correct, otherwise GYNNN, YYNNN, etc.')
 print('You can quit at any time by typing exit.')
 
 while playing and attempts > 0:
+    correct = []
+    change = []
     print(f'You have {attempts} attempts left.')
     guess = random.choice(possible_words)
     feedback = input(f'My guess is: {guess.upper()}. What is the result?\n').upper()
@@ -29,20 +31,27 @@ while playing and attempts > 0:
         break
     else:
         if 'G' in feedback:
-            correct_indexes = [i for i, letter in enumerate(feedback) if letter == 'G']
-            for i in correct_indexes:
-                possible_words = [word for word in possible_words if word[i] == guess[i]]
+            for i in range(5):
+                if feedback[i] == 'G':
+                    correct.append(guess[i])
+                    possible_words = [word for word in possible_words if word[i] == guess[i]]
         if 'Y' in feedback:
-            for i in range(len(feedback)):
+            for i in range(5):
                 if feedback[i] == 'Y':
+                    change.append(guess[i])
                     possible_words = [word for word in possible_words if guess[i] in word and word[i] != guess[i]]
         if 'N' in feedback:
-            present_letters = [guess[i] for i in range(len(feedback)) if feedback[i] == 'Y' or feedback[i] == 'G']
-            for i in range(len(feedback)):
-                if feedback[i] == 'N' and guess[i] not in present_letters:
-                    possible_words = [word for word in possible_words if guess[i] not in word]
+            for i in range(5):
+                if feedback[i] == 'N':
+                    if guess[i] not in change and guess[i] not in correct:
+                        possible_words = [word for word in possible_words if guess[i] not in word]
+                    else:
+                        if guess[i] in change or guess[i] in correct:
+                            count = max(change.count(guess[i]), correct.count(guess[i]))
+                            possible_words = [word for word in possible_words if word.count(guess[i]) >= count]
+
+    attempts -= 1                        
     print('Oops! I will try again.')
-    attempts -= 1
 
 if attempts == 0:
     print(f'Sorry! we run out of attempts...')
