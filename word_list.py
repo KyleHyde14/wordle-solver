@@ -1,4 +1,4 @@
-words = [
+WORDS = [
   'ababa', 
   'abane', 
   'abano', 
