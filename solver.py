@@ -17,15 +17,23 @@ while playing and attempts > 0:
     print(f'You have {attempts} attempts left.')
     guess = random.choice(possible_words)
     feedback = input(f'My guess is: {guess.upper()}. What is the result?\n').upper()
-
-    if any(char not in allowed for char in feedback):
-        print('Please enter a valid feedback. Only G, Y and N can be valid feedback letters.')
-
+    
     if feedback == 'EXIT':
         print('Thanks for playing!')
         result = 'exit'
+        playing = False
         break
-    if len(feedback) != 5:
+    
+    while any(char not in allowed for char in feedback):
+        print('Please enter a valid feedback. Only G, Y and N can be valid feedback letters.')
+        feedback = input(f'My guess is: {guess.upper()}. What is the result?\n').upper()
+        if feedback == 'EXIT':
+            print('Thanks for playing!')
+            result = 'exit'
+            playing = False
+            break
+
+    if len(feedback) != 5 and playing:
         print('Please enter a 5 letter feedback.')
         attempts += 1
         continue
