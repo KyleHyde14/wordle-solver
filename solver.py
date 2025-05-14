@@ -11,11 +11,15 @@ print('The format will be GGGGG if all correct, otherwise GYNNN, YYNNN, etc.')
 print('You can quit at any time by typing exit.')
 
 while playing and attempts > 0:
+    allowed = ['G', 'Y', 'N']
     correct = []
     change = []
     print(f'You have {attempts} attempts left.')
     guess = random.choice(possible_words)
     feedback = input(f'My guess is: {guess.upper()}. What is the result?\n').upper()
+
+    if any(char not in allowed for char in feedback):
+        print('Please enter a valid feedback. Only G, Y and N can be valid feedback letters.')
 
     if feedback == 'EXIT':
         print('Thanks for playing!')
